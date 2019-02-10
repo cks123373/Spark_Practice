@@ -1,0 +1,13 @@
+RDD - Text data  - 1 pd
+
+NOTE :  Create individual RDDs wherever required in the following process. 
+
+Consider the following text file. 
+India’s football team captain Sunil Chhetri recently took to Twitter pleading fans to support his team in a four-nation tournament held in Mumbai. Virat Kohli, the captain of national cricket team, doesn’t have to issue such appeals as he mostly plays in front of a full house. But football is gaining a following in India, more so after the launch of the professional Indian Super League. Over the next month, cricket will take a backseat as India joins the world in watching the FIFA World Cup.
+
+1. Create RDD for above text file with 3 partitions.
+2. display the contents of file using RDD.
+3. create individual RDD for first 3 lines.  
+4. Give a wordcount for each token in the file and save it to another file.  
+5. Differentiate between functionality of map and flatmap. 
+6. Display data in each partition individually and load them into separate files.
