@@ -1,0 +1,63 @@
+Problem-2
+
+This assignment will test your knowledge on Hive advance concepts like Partitioning and more.
+
+Input file u.user has users data who are rating movies in a movies database. This data is '|' delimited and each row has five fields. 
+Fields have following values on each row in order : userid, age(in years), gender(M/F), occupation, zipcode.
+
+ex: 902|45|F|artist|97203.
+
+Tasks to perform on this data:
+
+1. In Hive, Create a database and in this DB create an internal (managed) table to load this data. 
+
+ls Downloads/Chandan
+sed -n 1,5p Downloads/Chandan/u.user
+
+hadoop fs -ls /
+hadoop fs -mkdir /asgn
+
+Hive
+
+create database Asgn;
+use Asgn;
+
+osgdev@HadoopMI-40:~$
+
+hive>
+
+create table MovieData (
+userid int,
+age int, 
+gender string, 
+occupation string, 
+zipcode string)
+row format delimited fields terminated by '|' ;
+
+load data local inpath '/Downloads/Chandan/u.user' into table moviedata
+
+select * from moviedata limit 10;
+
+2. Load this data from local filesystem (not from HDFS) to internal (managed) table created above.
+
+load data local inpath ' C:\Users\chand\Desktop\hadoop\WiproHive\u.data' into table MovieData;
+
+load data local inpath 'gs://cksproject/hiveAsgn/u.data' into table MovieData;
+
+
+3. Create a partitioned table with partition on gender column (i.e. M and F partitions) and load data into this table from table loaded on task 2.
+
+create table MovieData_Part (
+userid int,
+age int,  
+occupation string, 
+zipcode string) PARTITIONED BY ( gender string) 
+row format delimited fields terminated by '|' ;
+
+insert overwrite table MovieData_Part partition( gender )  select * from MovieData ;
+
+4. List the HDFS filesystem and list the HDFS file created for above partitioned table.
+5. Run query to get the below on non-partitioned internal table and partitioned internal table created above... 
+   Avg age of female audience?
+Avg age of male audience?
+   Can you calculate note the time taken for each and calculate improved performance in case of partitioned tables.

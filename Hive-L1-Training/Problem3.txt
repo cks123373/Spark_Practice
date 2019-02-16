@@ -1,0 +1,24 @@
+Problem-3
+
+This assignment will test your knowledge on Hive advance concept like Bucketing, Sampling etc.
+
+Source file u.data has movie rating data in tab delimited format with columns: 
+
+user id | item id | rating | timestamp(time stamps are unix seconds since 1/1/1970 UTC).
+
+Perform the following task on this data:
+1. Load source data from native OS filesystem in Hive tables: Non Bucketing
+2. Load this data from Hive table to bucketed hive table with 3 buckets on userid column.
+3. Count the records loaded in each bucket. List the Hadoop files created for this table.
+   Do you see the difference from partitioned table?
+4. Fetch average rating over 5% on sample data on bucketted rating table.
+5. Fetch average rating on 3rd bucket of bucketted rating table.
+
+Fetch average rating on full rating bucketted table and compare results. 
+
+
+Query ID = osgdev_20190119220909_0670d78c-91e5-4d47-95d0-35914c6ac9ff
+Total jobs =3 
+Launching job 1 out of 3 
+Number of reducer tasks is set to 0 since there is no reducer operation 
+starting job = job_1547914979342_0007
