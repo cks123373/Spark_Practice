@@ -1,0 +1,47 @@
+Basics of RDD  : 1 PD 
+
+NOTE :  Create individual RDDs wherever required in the following process. 
+
+consider the following text file. 
+
+Priority,qty,sales
+Low,6,261.54
+High,44,10123.02
+High,27,244.57
+High,30,4965.75
+Null,22,394.27
+Null,21,146.69
+High,12,93.54
+High,22,905.08
+High,21,2781.82
+Low,44,228.41
+
+1.
+i) Upload the data using RDD.
+ii) Sort given data by priority
+2. 
+i) Place Low and high priority data into 2 seperate files.
+ii) Place records with less than 20 as qty into another file.
+3. 
+i) Create  RDDs for priority & sales, qty & sales .
+ii) Load sum of the sales aggregated by Priority into another file.
+4. 
+i) Load avg of the sales aggregated by qty into another file. 
+ii) Display count of records in low and high priorities .
+5. 
+i) Load above data into an RDD with 4 partitions
+ii) Display data along with partitions.
+6.
+i) Re-partition data to 6 partitions.
+ii) Display whole data from all partitions and load into another text file. 
+7.  Consider the following text file.
+priority,grade
+Low,A
+High,B
+Null,K
+
+i) Develop a RDD for above data with 2 partitions and display.
+ii) List out  priority,quantity,sales ,grade and save into another file. 
+8.
+i) From above file, separate data by grades and load into 3 different files. 
+ii) Is it possible to lessen the number of partitions? verify re-partition with above file by decreasing to 1 partition.
