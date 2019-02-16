@@ -1,0 +1,53 @@
+RDD- json file  -  1 pd
+
+Consider the following json file 
+{"id": 1,  "fname": "Jeanette",  "lname": "Penddreth",   "gender": "Female"  }
+{"id": 2,  "fname": "Giavani",  "lname": "Frediani",   "gender": "Male"}
+{"id": 3,  "fname": "Noell",  "lname": "Bea",  "gender": "Female"}
+{"id": 4,  "fname": "Willard",  "lname": "Valek",   "gender": "Male"}
+
+1. Create RDD for above json file. 
+rd3=sc.textFile("rdd_json_data_file.json")
+
+
+rd1=spark.read.json("rdd_json_data_file.json").rdd
+rd1.toDF().show()
+
+
+rd2=sc.wholeTextFiles("rdd_json_data_file.json")
+for i in rd2.map(lambda x:x[1]).collect():print i
+rd22=rd2.map(lambda x:x[1])
+for i in rd22.collect() : print i
+rd22.toDF().show()
+
+from pyspark.sql.types import *
+
+myschema=StructType([ 
+StructField("id",IntegerType() , False ) , 
+StructField("fname",StringType() , False ) ,
+StructField("lname",StringType() , False ) ,
+StructField("gender",StringType() , False ) ])
+
+2. display the contents in tabular format. 
+df=rd1.toDF()
+df.show()
+
+3. Apply filter on id , gender to restrict output.
+df.filter("id<3").show()
+df.filter("gender='Male' ").show()
+
+4. display contents in array format.
+df.collect() 
+
+5. classify whole data into 2 files based on gender and save them as json files.
+df.filter("gender='Male' ").coalesce(1).write.format('json').save('resultMale.json')
+df.filter("gender='Female' ").coalesce(1).write.format('json').save('resultFemale.json')
+
+6. differentiate between show and collect when used with data frames.
+show() will show only the content 
+Collect() will show content with structure/metadata
+
+7. sort the given data based out of gender and store in a file. 
+df.sort("gender").write.format('json').save('sortedGenderFile.json')
+8. convert given json file into a text file. 
+df.write.format('csv').save('jsonToText2')
