@@ -1,0 +1,7 @@
+	   ASSIGNMENT – 4  :  Accumulators and broadcast variables 
+
+
+1.	Consider the array { 10,20,30,40,50} . Display contents of this array using the broadcast variable. 
+
+2.	Consider the array { 20,25,30,35,40} . Display sum of this array using the accumulator. 
+

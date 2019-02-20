@@ -57,6 +57,11 @@ uploadedRddDataWithoutHeader.map(lambda x: (x[0],float(x[2]))).reduceByKey(lambd
 4. 
 i) Load avg of the sales aggregated by qty into another file. 
 
+qtyAndSalesData=uploadedRddDataWithoutHeader.map(lambda x:x.split(",")).map(lambda x: (x[1] ,x[2]))
+qtyAndSalesData.aggregateByKey((0.0,0), lambda x,y : (float(x[0])+float(y) ,int( x[1])+1) ,lambda x,y : (float(x[0]+x[1]),int( y[0]+y[1]))) .collect()
+qtyAndSalesAggrData=qtyAndSalesData.aggregateByKey((0.0,0), lambda x,y : (float(x[0])+float(y) ,int( x[1])+1) ,lambda x,y : (float(x[0]+x[1]),int( y[0]+y[1])))
+qtyAndSalesAggrData.map(lambda x:(x[0],x[1][0]/x[1][1])).collect()
+
 n
 ii) Display count of records in low and high priorities .
 uploadedRddDataWithoutHeader.map(lambda x:x.split(",")).filter(lambda x:x[0]=='Low').count()
