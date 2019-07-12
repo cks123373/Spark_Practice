@@ -1,23 +1,25 @@
-got to the folder .. 
+first init git in any empty folder - 
 
-type - 
 git init 
 
-git add .
-
-git commit -m "comment" 
-
-{
-Create a repository -
+now set git origin master 
 git remote remove origin
 git remote add origin https://github.com/cks123373/Spark_Practice
 
-}
+pull the git content to local system 
+git pull origin master  
+
+update the folder with new content 
+
+git add .
+git commit -m "comment" 
+
+then push the modified content back to git 
 
 git push -u origin master   
 
 
-if there are READ.me there run -   git push -f origin master 
+Note : if there are READ.me there run -   git push -f origin master 
 
 
 
