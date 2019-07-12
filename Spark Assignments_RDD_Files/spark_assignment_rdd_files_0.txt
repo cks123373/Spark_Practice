@@ -1,0 +1,61 @@
+	ASSIGNMENT – 2 : Working with associative arrays.    
+
+Note : Identify your spark context and answer the following. Wherever applicable create a new RDD.
+
+Consider the following associative array : 
+{  (Ram,10), (sam,30),(joe,40), (sai,54), (Ram,34),(sam,99),(joe,50),(tej,34),(Tej,39),(sai,120),(tej,45) } 
+
+
+1.	Consider above data and answer the following
+
+a)	Provide the output in the form of keypairs using RDD.
+
+l={  (Ram,10), (sam,30),(joe,40), (sai,54), (Ram,34),(sam,99),(joe,50),(tej,34),(Tej,39),(sai,120),(tej,45) } 
+rd1=sc.parallelize(l)
+rd2=rd1.map(lambda x : x.split(","))
+
+
+b)	Provide aggregation of each name. 
+
+rd2.reduceBykey(lambda x,y : x+y).collect()
+
+
+c)	Provide the count of occurrence each name. 
+rd2.countByKey()
+
+2.	Consider the following file sample.txt with  in ur local environment. Answer each question by creating new RDD for it. 
+
+“ Welcome to spark L2 session.  This is a text file which contains text for the demonstration of text files with spark. Spark is from Apache and this is going to be very useful demonstration for all. Happy learning with spark to all.  Bye for now.”
+
+a)	Display file using RDD
+
+readfilerdd= spark.sparkContext("sample.txt")
+readfilerdd.collect()
+
+b)	Display first line of sample.txt. 
+
+readfilerdd.map(lambda x:x.split(".")).collect()
+readfilerdd_line1=readfilerdd.map(lambda x:x.split(".")[0])
+
+c)	Display first 2 lines of sample.txt.
+
+readfilerdd_line2=readfilerdd.map(lambda x:x.split(".")[1])
+
+
+d)	Identify how many words are there and provide word count.
+
+readfilerdd.map(lambda x:x.split(".")).map(lambda x: x.split(" ")).distinct().count()  
+
+
+3.Consider the sample.txt file and answer the following using individual RDDs.
+
+a)	Display all tokens in the given file separated by a space. 
+
+readfilerdd.map(lambda x:x.split(".")).map(lambda x: x.split(" ")).collect()
+
+b)	Display all distinct words from the text files. 
+
+readfilerdd.map(lambda x:x.split(".")).map(lambda x: x.split(" ")).distinct().collect()
+
+
+c)	Provide word count of given file. 

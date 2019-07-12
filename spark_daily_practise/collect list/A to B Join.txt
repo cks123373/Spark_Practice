@@ -1,0 +1,41 @@
+dfA=spark.read.format('csv').option("header","true").load("A.txt")
+dfB=spark.read.format('csv').option("header","true").load("B.txt")
+
+dfjoin=dfA.join(dfB,"id","left")
+
+dfA.join(dfB,"id","left").groupBy("id","name").agg(concat_ws(" ",collect_set("text")).alias("collect_text") ).show()
++---+----+------------+
+| id|name|collect_text|
++---+----+------------+
+|  1|   B|  three four|
+|  0|   A|     one two|
++---+----+------------+
+
+
+df = spark.createDataFrame([('abcd','123')], ['s', 'd'])
+
++----+---+
+|   s|  d|
++----+---+
+|abcd|123|
++----+---+
+
+Concatenates multiple input string columns together into a single string column.
+
+df.select(concat(df.s, df.d).alias('s')).collect()
+
++-------+
+|      f|
++-------+
+|abcd123|
++-------+
+
+Concatenates multiple input string columns together into a single string column, using the given separator.
+
+df.select(concat_ws('-', df.s, df.d).alias('s')).collect()
+
++--------+
+|       f|
++--------+
+|abcd-123|
++--------+

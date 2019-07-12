@@ -1,0 +1,59 @@
+>>> data = sqlContext.createDataFrame([("Alberto", 2), ("Dakota", 2)], 
+...                                   ["Name", "askdaosdka"])
+>>> data.show()
++-------+----------+                                                            
+|   Name|askdaosdka|
++-------+----------+
+|Alberto|         2|
+| Dakota|         2|
++-------+----------+
+>>> data.schema
+
+
+
+>>> def updateColumn(l):
+...     for i in l:
+...         data.withColumnRenamed(i,i+"_").show()
+... 
+>>> 
+>>> updateColumn(data.columns)
++-------+----------+
+|  Name_|askdaosdka|
++-------+----------+
+|Alberto|         2|
+| Dakota|         2|
++-------+----------+
++-------+-----------+
+|   Name|askdaosdka_|
++-------+-----------+
+|Alberto|          2|
+| Dakota|          2|
++-------+-----------+
+
+
+
+
+>>> def updateColumn(d,l):
+...     for i in l:
+...         d=d.withColumnRenamed(i,i+"_")
+...     return d
+... 
+>>> 
+>>> updateColumn(data,data.columns)
+DataFrame[Name_: string, askdaosdka_: bigint]
+
+
+
+
+>>> data.columns
+['Name', 'askdaosdka']
+>>> updateColumn(data,data.columns).show()
++-------+-----------+
+|  Name_|askdaosdka_|
++-------+-----------+
+|Alberto|          2|
+| Dakota|          2|
++-------+-----------+
+>>> df1=updateColumn(data,data.columns)
+>>> df1.columns
+['Name_', 'askdaosdka_']

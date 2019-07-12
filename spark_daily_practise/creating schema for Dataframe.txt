@@ -1,0 +1,13 @@
+from pyspark.sql.types import *
+
+myschema=StructType( [StructField("id" , StringType() , True), 
+StructField("age", IntegerType() , True),  
+StructField("sex" , StringType() ,True),   
+StructField("profession" , StringType() ,True), 
+StructField("quantity" , IntegerType() ,True) ])  
+
+df=spark.read.format('csv').option("delimiter" , "|" ).schema(myschema).load("u.user")
+
+df.schema
+
+df.show()

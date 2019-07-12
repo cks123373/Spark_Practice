@@ -1,0 +1,53 @@
+df=spark.read.format('csv').option("header","true").option("sep","|").load("DataToFindDuplicate1.txt")
+df.show()
+
++----+---+-----+------+----+------------+------------+----+
+| _c0| ID|  ID2|Number|Name|Opening_Hour|Closing_Hour| _c7|
++----+---+-----+------+----+------------+------------+----+
+|null|ALT|  QWA|     6|null|    08:59:00|    23:30:00|null|
+|null|ALT|AUTRE|     2|null|    08:58:00|    23:29:00|null|
+|null|TDR|  QWA|     3|null|    08:57:00|    23:28:00|null|
+|null|ALT| TEST|     4|null|    08:56:00|    23:27:00|null|
+|null|ALT|  QWA|     6|null|    08:55:00|    23:26:00|null|
+|null|ALT|  QWA|     2|null|    08:54:00|    23:25:00|null|
+|null|ALT|  QWA|     2|null|    08:53:00|    23:24:00|null|
++----+---+-----+------+----+------------+------------+----+
+>>> for i in df.columns : print (i)
+... 
+_c0
+ID
+ID2
+Number
+Name
+Opening_Hour
+Closing_Hour
+_c7
+>>> l=df.columns
+>>> l
+['_c0', 'ID', 'ID2', 'Number', 'Name', 'Opening_Hour', 'Closing_Hour', '_c7']
+>>> l[0]
+'_c0'
+>>> l[0][0]
+'_'
+
+>>> for i in l : type(i)
+... 
+<type 'str'>
+<type 'str'>>>> 
+for i in df.columns : 
+...     if i[0] == "_" :
+...                     df=df.drop(i)
+... 
+>>> df.show()
++---+-----+------+----+------------+------------+
+| ID|  ID2|Number|Name|Opening_Hour|Closing_Hour|
++---+-----+------+----+------------+------------+
+|ALT|  QWA|     6|null|    08:59:00|    23:30:00|
+|ALT|AUTRE|     2|null|    08:58:00|    23:29:00|
+|TDR|  QWA|     3|null|    08:57:00|    23:28:00|
+|ALT| TEST|     4|null|    08:56:00|    23:27:00|
+|ALT|  QWA|     6|null|    08:55:00|    23:26:00|
+|ALT|  QWA|     2|null|    08:54:00|    23:25:00|
+|ALT|  QWA|     2|null|    08:53:00|    23:24:00|
++---+-----+------+----+------------+------------+
+

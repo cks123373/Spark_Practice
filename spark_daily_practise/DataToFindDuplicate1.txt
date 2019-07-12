@@ -1,0 +1,59 @@
+|ID|ID2|Number|Name|Opening_Hour|Closing_Hour|
+|ALT|  QWA|     6|null|    08:59:00|    23:30:00|
+|ALT|AUTRE|     2|null|    08:58:00|    23:29:00|
+|TDR|  QWA|     3|null|    08:57:00|    23:28:00|
+|ALT| TEST|     4|null|    08:56:00|    23:27:00|
+|ALT|  QWA|     6|null|    08:55:00|    23:26:00|
+|ALT|  QWA|     2|null|    08:54:00|    23:25:00|
+|ALT|  QWA|     2|null|    08:53:00|    23:24:00|
+
+>>> df33= spark.read.format('csv').option("sep" , "|").option("header","true").load("DataToFindDuplicate1.txt")
+>>> df33.show()
+
+import pyspark.sql.functions as f
+from pyspark.sql import Window
+
+w = Window.partitionBy('ID', 'ID2', 'Number')
+df33.select('*', f.count('ID').over(w).alias('dupeCount'))\
+    .where('dupeCount > 1')\
+    .drop('dupeCount')\
+    .show()
+#+---+---+------+----+------------+------------+
+#| ID|ID2|Number|Name|Opening_Hour|Closing_Hour|
+#+---+---+------+----+------------+------------+
+#|ALT|QWA|     2|null|    08:54:00|    23:25:00|
+#|ALT|QWA|     2|null|    08:53:00|    23:24:00|
+#|ALT|QWA|     6|null|    08:59:00|    23:30:00|
+#|ALT|QWA|     6|null|    08:55:00|    23:26:00|
+#+---+---+------+----+------------+------------+
+
+
+
+>>> df4.groupBy('ID').count().show()
++---+-----+
+| ID|count|
++---+-----+
+|TDR|    1|
+|ALT|    6|
++---+-----+
+>>> df4.groupBy('Number').count().show()
++------+-----+
+|Number|count|
++------+-----+
+|     3|    1|
+|     6|    2|
+|     4|    1|
+|     2|    3|
++------+-----+
+>>> df4.groupBy('ID2').count().show()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/usr/hdp/current/spark2-client/python/pyspark/sql/group.py", line 31, in _api
+    jdf = getattr(self._jgd, name)()
+  File "/usr/hdp/current/spark2-client/python/lib/py4j-0.10.6-src.zip/py4j/java_gateway.py", line 1160, in __call__
+  File "/usr/hdp/current/spark2-client/python/pyspark/sql/utils.py", line 69, in deco
+    raise AnalysisException(s.split(': ', 1)[1], stackTrace)
+pyspark.sql.utils.AnalysisException: u"cannot resolve '`ID2`' given input columns: [Number, ID, Closing_Hour, Name,   ID2, Opening_Hour];;\n'Aggregate ['ID2], ['ID
+2, count(1) AS count#757L]\n+- Project [ID#436,   ID2#437, Number#438, Name#439, Opening_Hour#440, Closing_Hour#441]\n   +- Relation[_c0#435,ID#436,  ID2#437,Numbe
+r#438,Name#439,Opening_Hour#440,Closing_Hour#441,_c7#442] csv\n"
+>>> 

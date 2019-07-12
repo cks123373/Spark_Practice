@@ -1,0 +1,4 @@
+from pyspark.sql.functions import when   
+cols = df.columns # list of all columns
+for col in cols:
+    df= df.withColumn(col, when(df[col]>0,1).otherwise(0))

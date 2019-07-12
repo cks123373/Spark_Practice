@@ -1,0 +1,33 @@
+from pyspark.sql.functions import *
+dateDf=spark.range(10).withColumn("today",current_date())
+
+
+Below code will not work 
+dateDf.withColumn("date1",date_add(col('today'),col("id"))).show()
+
+
+use expr - 
+
+dateDf.withColumn("future",expr( "date_add(today,id)")).show()
+
+
+def createFr(d):
+    i=1
+    while i<10:
+        d=d.withColumn("date1"+str(i),date_add(col('today'),i))
+        i=i+1
+    return d
+
+createFr(dateDf).show()
+
+
+from pyspark.sql.window import Window as W
+from pyspark.sql import functions as F
+df1 = df1.withColumn("idx", F.monotonically_increasing_id())
+windowSpec = W.orderBy("idx")
+df1.withColumn("idx", F.row_number().over(windowSpec)).show()
+
+
+
+weekday identification : 
+dateDf.withColumn("datemonth",dayofweek("today")).show()

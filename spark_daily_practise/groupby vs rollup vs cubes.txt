@@ -1,0 +1,42 @@
+
+dataframe should not have null before applying rollup and cubes
+
+>>> df1.rollup("ID","ID2").count().show()
++----+-----+-----+
+|  ID|  ID2|count|
++----+-----+-----+
+| ALT| TEST|    1|
+| ALT| null|    6|
+|null| null|    7|
+| TDR| null|    1|
+| ALT|AUTRE|    1|
+| ALT|  QWA|    4|
+| TDR|  QWA|    1|
++----+-----+-----+
+
+>>> df1.groupBy("ID","ID2").count().show()
++---+-----+-----+
+| ID|  ID2|count|
++---+-----+-----+
+|ALT|  QWA|    4|
+|TDR|  QWA|    1|
+|ALT| TEST|    1|
+|ALT|AUTRE|    1|
++---+-----+-----+
+
+
+>>> df1.cube("ID","ID2").count().show()
++----+-----+-----+
+|  ID|  ID2|count|
++----+-----+-----+
+| ALT| TEST|    1|
+| ALT| null|    6|
+|null|AUTRE|    1|
+|null| null|    7|
+| TDR| null|    1|
+| ALT|AUTRE|    1|
+|null| TEST|    1|
+| ALT|  QWA|    4|
+|null|  QWA|    5|
+| TDR|  QWA|    1|
++----+-----+-----+
